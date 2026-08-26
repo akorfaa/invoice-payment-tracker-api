@@ -20,7 +20,7 @@ When we sit down to actually do a session, I'll give you full numbered, copy-pas
 **Why it matters:** This is the first "real infrastructure" piece — most tutorials use SQLite, but Postgres is what you'll actually be judged on for a backend role. Normally teams run Postgres locally in Docker so dev doesn't depend on the internet, but that needs Docker Desktop, which needs admin rights you don't have here. A free cloud Postgres instance is the workaround — same SQL, same SQLAlchemy code, just reached over a connection string instead of `localhost`. It's also a genuinely common real-world setup, not just a workaround.
 **Covers:** Neon.tech account + free project (no install, no credit card), keeping the connection string out of git via `.env` + `python-dotenv`, SQLAlchemy engine/session setup, a `/health` endpoint that proves the DB connection actually works.
 
-- [ ] Not started
+- [x] Done
 
 ### Session 2 — User model, registration, password hashing (45–60 min)
 **Goal:** A `User` table (via SQLAlchemy + Alembic migration) and a `POST /auth/register` endpoint that creates a user with a securely hashed password.
