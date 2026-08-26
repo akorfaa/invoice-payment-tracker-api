@@ -1,7 +1,7 @@
 # Invoice & Payment Tracker API
 
 **Tier:** 1 (Junior) — Project 1 of the portfolio roadmap
-**Status:** Not started — planning complete
+**Status:** In progress — Session 0 done (local FastAPI skeleton running, pushed to GitHub)
 
 ## Problem
 
@@ -30,12 +30,14 @@ This project builds the backend for that: a multi-user API where each business o
 | Validation | Pydantic v2 | Ships with FastAPI; strict request/response schemas |
 | Auth | JWT via `python-jose`, password hashing via `passlib[bcrypt]` | Industry-standard stateless auth pattern |
 | Testing | Pytest + `httpx`/FastAPI `TestClient` | Standard Python API testing stack |
-| Local dev | Docker Compose (Postgres container) | So the dev DB matches production and doesn't depend on your machine's local Postgres install |
+| Dev database | Neon.tech (free, cloud-hosted Postgres) | No admin rights on this machine, so Docker Desktop isn't an option — Neon gives a real Postgres instance with no local install |
 | Deployment | Render (free tier), Railway as backup | Free, supports Postgres + a web service, good enough for a portfolio link |
+
+**Note on constraints:** this project is being built on a machine without admin/installer rights, so anything needing an elevated-permission install — Docker Desktop being the main one — is worked around rather than used. See `BUILD_PLAN.md` for how Sessions 1 and 9 handle this (cloud Postgres instead of local Docker; the Dockerfile is validated by Render's cloud build rather than run locally). This is worth a line in the portfolio write-up — designing around a locked-down machine is a realistic constraint, not a shortcut.
 
 ## How to run
 
-*(This section gets filled in as we build — it will include environment variable setup, `docker compose up` for the local database, how to run migrations, and how to run the test suite.)*
+*(This section gets filled in as we build — it will include environment variable setup, the Neon connection string, how to run migrations, and how to run the test suite.)*
 
 ## What I'd improve with more time
 

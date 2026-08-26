@@ -4,6 +4,8 @@ Each session below is sized for 30–90 minutes. Don't try to do two sessions ba
 
 When we sit down to actually do a session, I'll give you full numbered, copy-pasteable steps for just that session — this document is the map, not the turn-by-turn directions. Check off sessions as we finish them and update `_docs/progress-log.md` at the end of each one.
 
+> **Environment note (added after Session 0):** This machine doesn't have admin rights, so Docker Desktop — and anything else needing an elevated-permission installer — is off the table. Sessions 1 and 9 below are adjusted to work around this: a free cloud Postgres database instead of a local Docker database, and the Dockerfile gets validated by Render's cloud build in Session 10 instead of by running Docker locally.
+
 ---
 
 ### Session 0 — Project skeleton & tooling (30–45 min)
@@ -11,12 +13,12 @@ When we sit down to actually do a session, I'll give you full numbered, copy-pas
 **Why it matters:** Every real project starts with a clean, reproducible setup — virtual environment, dependency list, `.gitignore`, git repo. Skipping this is the #1 reason side projects get abandoned or become unreproducible later.
 **Covers:** virtual environment, `pip`/`requirements.txt`, FastAPI app skeleton, `uvicorn` dev server, git init + first commit, `.gitignore`.
 
-- [ ] Not started
+- [x] Done
 
-### Session 1 — Postgres + database connection (45–60 min)
-**Goal:** A local Postgres database running in Docker, and a working SQLAlchemy connection from the FastAPI app to it.
-**Why it matters:** This is the first "real infrastructure" piece — most tutorials use SQLite, but Postgres is what you'll actually be judged on for a backend role. Docker Compose means your teammates (or future you) can spin up an identical database with one command.
-**Covers:** Docker Compose file for Postgres, SQLAlchemy engine/session setup, environment variables via `.env` + `python-dotenv`, a `/health` endpoint that confirms the DB connection works.
+### Session 1 — Postgres connection, no local Docker (45–60 min)
+**Goal:** A free, cloud-hosted Postgres database (via Neon.tech) that your local FastAPI app connects to over the network, using SQLAlchemy.
+**Why it matters:** This is the first "real infrastructure" piece — most tutorials use SQLite, but Postgres is what you'll actually be judged on for a backend role. Normally teams run Postgres locally in Docker so dev doesn't depend on the internet, but that needs Docker Desktop, which needs admin rights you don't have here. A free cloud Postgres instance is the workaround — same SQL, same SQLAlchemy code, just reached over a connection string instead of `localhost`. It's also a genuinely common real-world setup, not just a workaround.
+**Covers:** Neon.tech account + free project (no install, no credit card), keeping the connection string out of git via `.env` + `python-dotenv`, SQLAlchemy engine/session setup, a `/health` endpoint that proves the DB connection actually works.
 
 - [ ] Not started
 
@@ -69,10 +71,10 @@ When we sit down to actually do a session, I'll give you full numbered, copy-pas
 
 - [ ] Not started
 
-### Session 9 — Dockerize the app (30–45 min)
-**Goal:** A `Dockerfile` that packages the FastAPI app itself (not just the database), plus an updated `docker-compose.yml` that runs the app and Postgres together with one command.
-**Why it matters:** Deployment platforms like Render can build straight from a Dockerfile — this also proves you can containerize an app, a skill that comes up constantly at mid/senior level.
-**Covers:** Dockerfile (multi-stage or simple, your call), docker-compose update, verifying the whole stack runs with `docker compose up`.
+### Session 9 — Write the Dockerfile (30–45 min)
+**Goal:** A working `Dockerfile` that packages the FastAPI app into a container image — built and actually run for real by Render during deployment (Session 10), since `docker build`/`docker run` locally need Docker Desktop, which needs admin rights.
+**Why it matters:** Containerizing an app is a real, commonly-expected skill, and most cloud platforms (including Render) build your Dockerfile on their own servers — you don't need Docker installed on your machine to prove this. You're still writing real production infrastructure code; you just can't test-run the container locally, which we'll note honestly in the README's "what I'd improve with more time" section.
+**Covers:** Dockerfile (base image, install dependencies, copy app code, expose port, start command), a `.dockerignore` file, and a short README note about the local-testing constraint.
 
 - [ ] Not started
 
@@ -101,7 +103,7 @@ When we sit down to actually do a session, I'll give you full numbered, copy-pas
 - [ ] All endpoints implemented and protected by JWT auth where required
 - [ ] Ownership checks proven by tests (not just "trust me")
 - [ ] Pytest suite passes, covers happy paths + validation errors + auth failures
-- [ ] App runs via `docker compose up` with no manual steps
+- [ ] App connects successfully to the Neon Postgres database in dev, and the Dockerfile builds and runs successfully on Render
 - [ ] Live, working deployment URL
 - [ ] README complete (problem, approach, tech stack, how to run, what I'd improve)
 - [ ] Short write-up drafted for LinkedIn/portfolio site
