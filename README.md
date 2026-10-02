@@ -1,7 +1,7 @@
 # Invoice & Payment Tracker API
 
 **Tier:** 1 (Junior) — Project 1 of the portfolio roadmap
-**Status:** In progress — Session 2 done (User model + Alembic migration, `/auth/register` hashes passwords with bcrypt, first pytest tests passing)
+**Status:** In progress — Session 3 done (JWT login, `get_current_user` dependency protects `/users/me`, 6 pytest tests passing)
 
 ## Problem
 

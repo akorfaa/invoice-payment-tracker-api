@@ -34,7 +34,7 @@ When we sit down to actually do a session, I'll give you full numbered, copy-pas
 **Why it matters:** This is the auth mechanism the rest of the API leans on. Understanding *why* JWTs work (a signed token the server can verify without a database lookup) is a common interview question.
 **Covers:** JWT encode/decode, login endpoint, `OAuth2PasswordBearer`/dependency injection for protected routes, tests for valid/invalid login and for accessing a protected route without a token.
 
-- [ ] Not started
+- [x] Done
 
 ### Session 4 — Client CRUD (45–60 min)
 **Goal:** Full create/read/update/delete endpoints for `Client`, scoped so a user only ever sees their own clients.
