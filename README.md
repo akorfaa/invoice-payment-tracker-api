@@ -1,7 +1,7 @@
 # Invoice & Payment Tracker API
 
 **Tier:** 1 (Junior) — Project 1 of the portfolio roadmap
-**Status:** In progress — Session 1 done (FastAPI connected to Neon Postgres, `/health` confirms DB connectivity)
+**Status:** In progress — Session 2 done (User model + Alembic migration, `/auth/register` hashes passwords with bcrypt, first pytest tests passing)
 
 ## Problem
 
@@ -37,45 +37,7 @@ This project builds the backend for that: a multi-user API where each business o
 
 ## How to run
 
-1. **Clone the repo and create a virtual environment**
-   ```bash
-   git clone <repo-url>
-   cd 01-invoice-payment-tracker-api
-   python -m venv venv
-   ```
-
-2. **Activate the virtual environment**
-   ```powershell
-   # Windows (PowerShell)
-   ./venv/Scripts/Activate.ps1
-   ```
-   ```bash
-   # macOS/Linux
-   source venv/bin/activate
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Set up environment variables**
-   Create a `.env` file in the project root (never committed — see `.gitignore`) with your own Postgres connection string:
-   ```
-   DATABASE_URL=postgresql://<user>:<password>@<host>/<database>?sslmode=require
-   ```
-   A free instance works fine for this — see [Neon.tech](https://neon.tech).
-
-5. **Run the dev server**
-   ```bash
-   uvicorn app.main:app --reload
-   ```
-   The API is now running at `http://127.0.0.1:8000`. Interactive docs (Swagger UI) are at `http://127.0.0.1:8000/docs`.
-
-6. **Verify the database connection**
-   Hit `http://127.0.0.1:8000/health` — a response of `{"status": "ok", "database": "connected"}` confirms the app can reach Postgres.
-
-*(Migrations and the test suite get documented here once Sessions 2 and 8 land.)*
+*(This section gets filled in as we build — it will include environment variable setup, the Neon connection string, how to run migrations, and how to run the test suite.)*
 
 ## What I'd improve with more time
 

@@ -27,7 +27,7 @@ When we sit down to actually do a session, I'll give you full numbered, copy-pas
 **Why it matters:** Introduces Alembic (schema migrations — how real teams change a database safely over time) and `passlib`/bcrypt (never store plain-text passwords — this is a baseline security expectation, not a nice-to-have).
 **Covers:** Alembic setup, first migration, `User` model, Pydantic schemas for request/response, password hashing, first pytest test.
 
-- [ ] Not started
+- [x] Done
 
 ### Session 3 — Login + JWT auth (45–75 min)
 **Goal:** A `POST /auth/login` endpoint that verifies credentials and returns a JWT, plus a reusable `get_current_user` dependency that protects any endpoint you attach it to.
