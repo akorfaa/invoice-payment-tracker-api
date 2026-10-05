@@ -1,7 +1,7 @@
 # Invoice & Payment Tracker API
 
 **Tier:** 1 (Junior) — Project 1 of the portfolio roadmap
-**Status:** In progress — Session 3 done (JWT login, `get_current_user` dependency protects `/users/me`, 6 pytest tests passing)
+**Status:** In progress — Session 4 done (Client CRUD scoped by owner_id, routes split into app/routers/, 15 pytest tests passing)
 
 ## Problem
 

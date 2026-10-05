@@ -41,7 +41,7 @@ When we sit down to actually do a session, I'll give you full numbered, copy-pas
 **Why it matters:** This is the first "real" resource and establishes the ownership pattern (`client.owner_id == current_user.id`) you'll reuse for every other resource. Get this pattern right once, reuse it everywhere.
 **Covers:** `Client` model + migration, CRUD router, ownership-scoped queries, tests including "user B cannot see user A's client."
 
-- [ ] Not started
+- [x] Done (also split main.py into app/routers/ — auth, users, clients — ahead of Invoice/Payment in the next two sessions)
 
 ### Session 5 — Invoice CRUD + status logic (60–90 min)
 **Goal:** Full CRUD for `Invoice`, tied to a `Client`, with a status field (`unpaid`/`partially_paid`/`paid`/`overdue`).
