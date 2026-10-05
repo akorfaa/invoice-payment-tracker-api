@@ -48,7 +48,7 @@ When we sit down to actually do a session, I'll give you full numbered, copy-pas
 **Why it matters:** Introduces a foreign-key relationship (invoice belongs to a client belongs to a user) and your first bit of business logic beyond plain CRUD — status isn't just user-set, it's derived.
 **Covers:** `Invoice` model + migration, nested ownership checks (invoice → client → user), Pydantic validation (no negative amounts, due date rules), tests.
 
-- [ ] Not started
+- [x] Done (stored status is `unpaid`/`partially_paid`/`paid`, updated by payments in Session 6; `overdue` is computed on read as `is_overdue`)
 
 ### Session 6 — Payments + automatic status updates (45–75 min)
 **Goal:** A `POST /invoices/{id}/payments` endpoint that records a payment and automatically recalculates the invoice's status (partial vs. fully paid vs. overpaid-rejected).

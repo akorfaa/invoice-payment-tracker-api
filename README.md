@@ -1,7 +1,7 @@
 # Invoice & Payment Tracker API
 
 **Tier:** 1 (Junior) — Project 1 of the portfolio roadmap
-**Status:** In progress — Session 4 done (Client CRUD scoped by owner_id, routes split into app/routers/, 15 pytest tests passing)
+**Status:** In progress — Session 5 done (Invoice CRUD with Decimal money, validation, derived `is_overdue`, ownership enforced through the client)
 
 ## Problem
 
@@ -16,7 +16,7 @@ This project builds the backend for that: a multi-user API where each business o
 - Users create **invoices** tied to a client: amount, description, due date, and a status (`unpaid`, `partially_paid`, `paid`, `overdue`).
 - Users record **payments** against an invoice. An invoice's status updates automatically based on how much has been paid.
 - **Authorization** is enforced everywhere: user A can never read, edit, or delete user B's clients, invoices, or payments — even if they guess the right ID. This is the single most important thing to get right and to prove with a test.
-- **Input validation** on every write endpoint (Pydantic models) — no negative invoice amounts, no invoices dated in the past for `due_date` unless explicitly backdated, no empty client names, etc.
+- **Input validation** on every write endpoint (Pydantic models) — amounts must be positive with at most 2 decimal places, an invoice's due date can't be before its issue date, no empty descriptions, etc.
 - **Automated tests** (pytest) cover: registration, login, CRUD happy paths, validation failures, and — critically — the cross-user access-denial rule.
 - **Deployed live** on Render (free tier) with a managed Postgres database, so the portfolio has a real working link, not just a GitHub repo.
 
