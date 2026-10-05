@@ -62,3 +62,9 @@ def test_cannot_delete_another_users_client():
 
     response = client.delete(f"/clients/{client_id}", headers=headers_b)
     assert response.status_code == 404
+
+def test_update_client_name_null_rejected():
+    headers = _auth_headers("client_test_user_i@example.com")
+    created = client.post("/clients/", json={"name": "Has Name"}, headers=headers)
+    response = client.put(f"/clients/{created.json()['id']}", json={"name": None}, headers=headers)
+    assert response.status_code == 422

@@ -61,7 +61,11 @@ def update_client(
     if client is None:
         raise HTTPException(status_code=404, detail="Client not found")
 
-    for field, value in client_in.model_dump(exclude_unset=True).items():
+    updates = client_in.model_dump(exclude_unset=True)
+    if "name" in updates and updates["name"] is None:
+        raise HTTPException(status_code=422, detail="name cannot be null")
+
+    for field, value in updates.items():
         setattr(client, field, value)
     db.commit()
     db.refresh(client)
@@ -81,6 +85,16 @@ def delete_client(
     )
     if client is None:
         raise HTTPException(status_code=404, detail="Client not found")
+
+    has_invoices = (
+        db.query(models.Invoice).filter(models.Invoice.client_id == client.id).first()
+    )
+    if has_invoices:
+        raise HTTPException(
+            status_code=409,
+            detail="Cannot delete a client that has invoices. Delete the invoices first.",
+        )
+
     db.delete(client)
     db.commit()
     return None
