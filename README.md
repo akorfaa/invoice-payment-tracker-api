@@ -1,7 +1,7 @@
 # Invoice & Payment Tracker API
 
 **Tier:** 1 (Junior) — Project 1 of the portfolio roadmap
-**Status:** In progress — Session 6 done (payments recorded against invoices; invoice status updates automatically; overpayment and paid-invoice payments rejected with 409; row locking on payment writes)
+**Status:** In progress — Session 7 done (consistent JSON error responses on every endpoint, no stack traces or internals leaked, password and input hardening)
 
 ## Problem
 

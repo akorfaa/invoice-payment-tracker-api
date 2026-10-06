@@ -62,7 +62,7 @@ When we sit down to actually do a session, I'll give you full numbered, copy-pas
 **Why it matters:** This is one of the clearest signals of production-mindedness vs. tutorial-mindedness. A senior-leaning reviewer will deliberately send bad input to see what comes back.
 **Covers:** FastAPI exception handlers, custom exception classes, review pass over every endpoint for missing validation, tests for the error paths.
 
-- [ ] Not started
+- [x] Done (one JSON error shape for every error via central handlers in `app/errors.py`; crashes return a generic 500; password rules; app refuses to start without `SECRET_KEY`; custom exception classes deliberately deferred)
 
 ### Session 8 — Test suite consolidation (45–75 min)
 **Goal:** A test suite you'd be comfortable showing in an interview — organized, using fixtures (shared setup like "a logged-in test user"), and covering the cross-user access rule explicitly and thoroughly.
