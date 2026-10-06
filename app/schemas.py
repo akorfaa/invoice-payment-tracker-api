@@ -3,9 +3,18 @@ from decimal import Decimal
 from typing import Literal, Optional
 from pydantic import BaseModel, EmailStr, ConfigDict, Field, field_validator, model_validator
 
+
 class UserCreate(BaseModel):
     email: EmailStr
-    password: str
+    password: str = Field(min_length=8)
+
+    @field_validator("password")
+    @classmethod
+    def password_fits_bcrypt(cls, value: str) -> str:
+        if len(value.encode("utf-8")) > 72:
+            raise ValueError("password must be at most 72 bytes")
+        return value
+
 
 class UserOut(BaseModel):
     id: int
@@ -14,6 +23,7 @@ class UserOut(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
+
 class ClientBase(BaseModel):
     name: str
     email: Optional[EmailStr] = None
@@ -21,13 +31,18 @@ class ClientBase(BaseModel):
 
 
 class ClientCreate(ClientBase):
-    pass
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+    name: str = Field(min_length=1, max_length=200)
+    phone: Optional[str] = Field(default=None, max_length=30)
 
 
 class ClientUpdate(BaseModel):
-    name: Optional[str] = None
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+    name: Optional[str] = Field(default=None, min_length=1, max_length=200)
     email: Optional[EmailStr] = None
-    phone: Optional[str] = None
+    phone: Optional[str] = Field(default=None, max_length=30)
 
 
 class ClientOut(ClientBase):
@@ -36,7 +51,10 @@ class ClientOut(ClientBase):
     created_at: datetime
     model_config = ConfigDict(from_attributes=True)
 
+
 class InvoiceCreate(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+
     client_id: int
     amount: Decimal = Field(gt=0, max_digits=12, decimal_places=2)
     description: str = Field(min_length=1, max_length=500)
@@ -51,6 +69,8 @@ class InvoiceCreate(BaseModel):
 
 
 class InvoiceUpdate(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+
     amount: Optional[Decimal] = Field(default=None, gt=0, max_digits=12, decimal_places=2)
     description: Optional[str] = Field(default=None, min_length=1, max_length=500)
     due_date: Optional[date] = None
@@ -75,6 +95,8 @@ PaymentMethod = Literal["cash", "bank_transfer", "mobile_money", "card", "other"
 
 
 class PaymentCreate(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+
     amount: Decimal = Field(gt=0, max_digits=12, decimal_places=2)
     paid_on: date = Field(default_factory=date.today)
     method: Optional[PaymentMethod] = None

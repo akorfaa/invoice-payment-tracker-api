@@ -13,7 +13,7 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 def register(user_in: schemas.UserCreate, db: Session = Depends(get_db)):
     existing_user = db.query(models.User).filter(models.User.email == user_in.email).first()
     if existing_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
+        raise HTTPException(status_code=409, detail="Email already registered")
 
     new_user = models.User(
         email=user_in.email,

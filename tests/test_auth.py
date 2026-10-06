@@ -23,4 +23,4 @@ def test_register_duplicate_email_rejected():
         "/auth/register",
         json={"email":"pytest_user2@example.com", "password": "testpass123"}
     )
-    assert response.status_code == 400
+    assert response.status_code == 409
