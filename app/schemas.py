@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from decimal import Decimal
-from typing import Optional
-from pydantic import BaseModel, EmailStr, ConfigDict, Field, model_validator
+from typing import Literal, Optional
+from pydantic import BaseModel, EmailStr, ConfigDict, Field, field_validator, model_validator
 
 class UserCreate(BaseModel):
     email: EmailStr
@@ -60,10 +60,40 @@ class InvoiceOut(BaseModel):
     id: int
     client_id: int
     amount: Decimal
+    amount_paid: Decimal
+    balance_due: Decimal
     description: str
     issue_date: date
     due_date: date
     status: str
     is_overdue: bool
+    created_at: datetime
+    model_config = ConfigDict(from_attributes=True)
+
+
+PaymentMethod = Literal["cash", "bank_transfer", "mobile_money", "card", "other"]
+
+
+class PaymentCreate(BaseModel):
+    amount: Decimal = Field(gt=0, max_digits=12, decimal_places=2)
+    paid_on: date = Field(default_factory=date.today)
+    method: Optional[PaymentMethod] = None
+    reference: Optional[str] = Field(default=None, max_length=100)
+
+    @field_validator("paid_on")
+    @classmethod
+    def paid_on_not_in_future(cls, value: date) -> date:
+        if value > date.today():
+            raise ValueError("paid_on cannot be in the future")
+        return value
+
+
+class PaymentOut(BaseModel):
+    id: int
+    invoice_id: int
+    amount: Decimal
+    paid_on: date
+    method: Optional[str]
+    reference: Optional[str]
     created_at: datetime
     model_config = ConfigDict(from_attributes=True)
