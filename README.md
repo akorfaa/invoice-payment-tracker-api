@@ -1,7 +1,7 @@
 # Invoice & Payment Tracker API
 
 **Tier:** 1 (Junior) — Project 1 of the portfolio roadmap
-**Status:** In progress — Session 5 done (Invoice CRUD with Decimal money, validation, derived `is_overdue`, ownership enforced through the client)
+**Status:** In progress — Session 6 done (payments recorded against invoices; invoice status updates automatically; overpayment and paid-invoice payments rejected with 409; row locking on payment writes)
 
 ## Problem
 

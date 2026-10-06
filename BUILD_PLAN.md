@@ -55,7 +55,7 @@ When we sit down to actually do a session, I'll give you full numbered, copy-pas
 **Why it matters:** This is the most "product thinking" part of the project — translating a business rule ("an invoice is paid once payments sum to the invoice amount") into code and tests, rather than just exposing raw database fields.
 **Covers:** `Payment` model + migration, status-recalculation logic, edge case handling (overpayment, payment on an already-paid invoice), tests for each case.
 
-- [ ] Not started
+- [x] Done (service layer in `app/services.py`; invoice status recalculated from payments; row locking with `SELECT ... FOR UPDATE`; payments are deletable but not editable)
 
 ### Session 7 — Error handling & validation hardening (30–60 min)
 **Goal:** Consistent, sensible error responses across the whole API — proper 404s, 403s, 422s, with clear JSON error bodies instead of raw stack traces.
