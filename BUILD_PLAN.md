@@ -76,7 +76,7 @@ When we sit down to actually do a session, I'll give you full numbered, copy-pas
 **Why it matters:** Containerizing an app is a real, commonly-expected skill, and most cloud platforms (including Render) build your Dockerfile on their own servers — you don't need Docker installed on your machine to prove this. You're still writing real production infrastructure code; you just can't test-run the container locally, which we'll note honestly in the README's "what I'd improve with more time" section.
 **Covers:** Dockerfile (base image, install dependencies, copy app code, expose port, start command), a `.dockerignore` file, and a short README note about the local-testing constraint.
 
-- [ ] Not started
+- [x] Done (Dockerfile on python:3.11-slim, non-root user, honours $PORT; .dockerignore keeps .env, venv and tests out of the build; requirements split into requirements.in / requirements.txt (production, pinned) / requirements-dev.txt. Verified without Docker: production-only install imports the app, and a fresh dev install passes all 64 tests. Real build happens on Render in Session 10)
 
 ### Session 10 — Deploy to Render (45–75 min)
 **Goal:** The API live on the internet with a real URL, backed by a managed Postgres instance, with migrations run against it.

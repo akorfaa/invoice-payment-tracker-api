@@ -1,7 +1,7 @@
 # Invoice & Payment Tracker API
 
 **Tier:** 1 (Junior) — Project 1 of the portfolio roadmap
-**Status:** In progress — Session 8 done (64 isolated tests that run in seconds against a local Postgres, including a dedicated proof that one user can never reach another user's data)
+**Status:** In progress — Session 9 done (Dockerfile and split requirements; real container build is validated by Render in Session 10)
 
 ## Problem
 
@@ -34,6 +34,14 @@ This project builds the backend for that: a multi-user API where each business o
 | Deployment | Render (free tier), Railway as backup | Free, supports Postgres + a web service, good enough for a portfolio link |
 
 **Note on constraints:** this project is being built on a machine without admin/installer rights, so anything needing an elevated-permission install — Docker Desktop being the main one — is worked around rather than used. See `BUILD_PLAN.md` for how Sessions 1 and 9 handle this (cloud Postgres instead of local Docker; the Dockerfile is validated by Render's cloud build rather than run locally). This is worth a line in the portfolio write-up — designing around a locked-down machine is a realistic constraint, not a shortcut.
+
+## Container
+
+The `Dockerfile` packages the API on `python:3.11-slim`, installs only the production packages from `requirements.txt`, runs as a non-root user and listens on `$PORT` (Render's convention, default 8000). `.dockerignore` keeps `.env`, `venv/`, tests and local database files out of the build.
+
+Dependencies are split three ways: `requirements.in` (the packages I chose), `requirements.txt` (the full pinned production set, generated from a clean install of the `.in` file) and `requirements-dev.txt` (production plus pytest, pytest-cov and the local test database).
+
+**Honest limitation:** this machine has no admin rights, so Docker can't be installed and the image has never been built locally. I verified the riskiest part another way (a clean environment with only the production packages imports the app, and a clean dev environment passes all 64 tests), and the real image build is performed by Render's cloud build.
 
 ## How to run
 
