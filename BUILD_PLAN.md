@@ -69,7 +69,7 @@ When we sit down to actually do a session, I'll give you full numbered, copy-pas
 **Why it matters:** "Basic tests" from the roadmap means more than a couple of happy-path checks. This session is specifically about depth and organization, not new features.
 **Covers:** pytest fixtures/conftest.py, a dedicated test file for the "can't touch another user's data" rule across every resource, a coverage check (`pytest-cov`) to spot untested paths.
 
-- [ ] Not started
+- [x] Done (per-test rollback isolation in `tests/conftest.py`; tests run against an embedded local Postgres via `pgserver`, no install or admin needed; dedicated cross-user and isolation tests; 64 tests in about 4 seconds; coverage measured with `pytest-cov`)
 
 ### Session 9 — Write the Dockerfile (30–45 min)
 **Goal:** A working `Dockerfile` that packages the FastAPI app into a container image — built and actually run for real by Render during deployment (Session 10), since `docker build`/`docker run` locally need Docker Desktop, which needs admin rights.

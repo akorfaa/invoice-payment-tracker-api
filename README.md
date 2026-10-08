@@ -1,7 +1,7 @@
 # Invoice & Payment Tracker API
 
 **Tier:** 1 (Junior) — Project 1 of the portfolio roadmap
-**Status:** In progress — Session 7 done (consistent JSON error responses on every endpoint, no stack traces or internals leaked, password and input hardening)
+**Status:** In progress — Session 8 done (64 isolated tests that run in seconds against a local Postgres, including a dedicated proof that one user can never reach another user's data)
 
 ## Problem
 
