@@ -6,6 +6,7 @@ bcrypt==5.0.0
 cffi==2.1.1
 click==8.4.2
 colorama==0.4.6
+coverage==7.16.2
 cryptography==50.0.1
 dnspython==2.8.0
 ecdsa==0.19.2
@@ -29,6 +30,7 @@ pydantic==2.13.4
 pydantic_core==2.46.4
 Pygments==2.21.0
 pytest==9.1.1
+pytest-cov==7.1.0
 python-dotenv==1.2.3
 python-jose==3.5.0
 python-multipart==0.0.32
