@@ -83,7 +83,7 @@ When we sit down to actually do a session, I'll give you full numbered, copy-pas
 **Why it matters:** A portfolio project that only "runs on my machine" is much weaker than one with a live link a recruiter or hiring manager can actually hit. This is the difference between "I built this" and "I shipped this."
 **Covers:** Render account setup, environment variables/secrets, connecting to Render Postgres, running Alembic migrations against production, smoke-testing the live URL.
 
-- [ ] Not started
+- [x] Done (live on Render free tier, built from the Dockerfile; separate production Neon project in Frankfurt (Render's free Postgres expires after 30 days); migrations run manually from the laptop; health check on /health/live; scripts/smoke_test_live.py passes 15/15 against the live URL)
 
 ### Session 11 — README, write-up, and wrap-up (30–45 min)
 **Goal:** Finished README (how to run, what you'd improve), a short LinkedIn/portfolio write-up framed around the decisions you made (why JWT, why Postgres, why the ownership-check pattern) rather than just "I built an API," and the roadmap status doc updated.
