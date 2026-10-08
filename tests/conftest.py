@@ -1,9 +1,10 @@
 import os
+from pathlib import Path
 
 import bcrypt
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.engine import make_url
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session
@@ -12,36 +13,61 @@ from app import models  # noqa: F401  (imported so Base knows about every table)
 from app.database import Base, get_db
 from app.main import app
 
-TEST_DB_NAME = "invoice_tracker_test"  # must match scripts/create_test_db.py
+TEST_DB_NAME = "invoice_tracker_test"
+LOCAL_PG_DATA_DIR = Path(__file__).resolve().parent.parent / ".pgdata"
 
 
-def _test_database_url():
-    # app.database has already loaded .env by the time we get here.
-    dev_url = make_url(os.environ["DATABASE_URL"])
-    test_url = dev_url.set(database=TEST_DB_NAME)
-    # Safety rails: the next fixture DROPS every table, so never let it
-    # point at the real dev database.
-    assert test_url.database != dev_url.database
-    assert test_url.database.endswith("_test")
-    return test_url
+def _start_local_postgres():
+    """Start a Postgres that lives in ./.pgdata (no install, no admin rights).
+
+    Returns the server object (keep it referenced so it keeps running) and the
+    URL of the test database inside it.
+    """
+    import pgserver  # imported here so it's only needed when we actually use it
+
+    server = pgserver.get_server(LOCAL_PG_DATA_DIR)
+    admin_url = make_url(server.get_uri())
+
+    # CREATE DATABASE cannot run inside a transaction, hence AUTOCOMMIT.
+    admin_engine = create_engine(admin_url, isolation_level="AUTOCOMMIT")
+    with admin_engine.connect() as connection:
+        exists = connection.execute(
+            text("SELECT 1 FROM pg_database WHERE datname = :name"), {"name": TEST_DB_NAME}
+        ).scalar()
+        if not exists:
+            connection.execute(text(f'CREATE DATABASE "{TEST_DB_NAME}"'))
+    admin_engine.dispose()
+
+    return server, admin_url.set(database=TEST_DB_NAME)
 
 
 @pytest.fixture(scope="session")
 def engine():
-    """Runs once per test run: connect to the test DB and build a fresh schema."""
-    test_engine = create_engine(_test_database_url())
+    """Runs once per test run: get a test database and build a fresh schema in it."""
+    explicit_url = os.getenv("TEST_DATABASE_URL")
+    if explicit_url:
+        server, test_url = None, make_url(explicit_url)
+    else:
+        server, test_url = _start_local_postgres()
+
+    # Safety rail: the lines below DROP every table, so only ever run them
+    # against a database whose name says it's for testing.
+    assert test_url.database.endswith("_test"), (
+        f"Refusing to run: test database name must end with '_test', got {test_url.database!r}"
+    )
+
+    test_engine = create_engine(test_url)
     try:
         test_engine.connect().close()
     except OperationalError as error:
-        pytest.exit(
-            "Cannot reach the test database. Did you run: python scripts/create_test_db.py ?\n"
-            f"Underlying error: {error.orig}",
-            returncode=1,
-        )
+        pytest.exit(f"Cannot reach the test database.\nUnderlying error: {error.orig}", returncode=1)
+
     Base.metadata.drop_all(test_engine)
     Base.metadata.create_all(test_engine)
     yield test_engine
     test_engine.dispose()
+    # `server` is still referenced here, so the local Postgres stays up for the
+    # whole test run and shuts down when the run ends.
 
 
 @pytest.fixture()
