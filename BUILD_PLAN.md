@@ -90,7 +90,7 @@ When we sit down to actually do a session, I'll give you full numbered, copy-pas
 **Why it matters:** Per the project instructions — the write-up should show decision-making, since that's what differentiates a portfolio piece from a tutorial clone.
 **Covers:** Final README pass, `_docs/progress-log.md` closing entry, `_docs/roadmap-status.md` update, drafting the write-up.
 
-- [ ] Not started
+- [x] Done (README rewritten with decisions, how to run, tests and limits; `.env.example` added; four `/docs` screenshots in `docs/screenshots/`; LinkedIn post and portfolio case study in `docs/writeup.md`; project and roadmap logs closed out)
 
 ---
 
@@ -100,10 +100,10 @@ When we sit down to actually do a session, I'll give you full numbered, copy-pas
 
 ## Definition of done for this project
 
-- [ ] All endpoints implemented and protected by JWT auth where required
-- [ ] Ownership checks proven by tests (not just "trust me")
-- [ ] Pytest suite passes, covers happy paths + validation errors + auth failures
-- [ ] App connects successfully to the Neon Postgres database in dev, and the Dockerfile builds and runs successfully on Render
-- [ ] Live, working deployment URL
-- [ ] README complete (problem, approach, tech stack, how to run, what I'd improve)
-- [ ] Short write-up drafted for LinkedIn/portfolio site
+- [x] All endpoints implemented and protected by JWT auth where required
+- [x] Ownership checks proven by tests (not just "trust me")
+- [x] Pytest suite passes, covers happy paths + validation errors + auth failures
+- [x] App connects successfully to the Neon Postgres database in dev, and the Dockerfile builds and runs successfully on Render
+- [x] Live, working deployment URL
+- [x] README complete (problem, approach, tech stack, how to run, what I'd improve)
+- [x] Short write-up drafted for LinkedIn/portfolio site
